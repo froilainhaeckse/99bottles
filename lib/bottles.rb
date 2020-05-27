@@ -24,4 +24,8 @@ class Bottles
 #{action}, #{new_bottle_stash} of beer on the wall.
 "
   end
+
+  def verses(*args)
+    args.map { |bottles_count| Bottles.new.verse(bottles_count) } * "\n"
+  end
 end
