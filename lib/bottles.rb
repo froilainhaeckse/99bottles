@@ -2,14 +2,21 @@
 
 class Bottles
   def verse(bottles_count)
-    if bottles_count > 2
-      "#{bottles_count} bottles of beer on the wall, #{bottles_count} bottles of beer.
-Take one down and pass it around, #{bottles_count - 1} bottles of beer on the wall.
-"
+    taking_down = 'one'
+    if bottles_count == 1
+      old_bottle_stash = "#{bottles_count} bottle"
+      new_bottle_stash = 'no more bottles'
+      taking_down = 'it'
+    elsif bottles_count == 2
+      old_bottle_stash = "#{bottles_count} bottles"
+      new_bottle_stash = "#{bottles_count - 1} bottle"
     else
-      "#{bottles_count} bottles of beer on the wall, #{bottles_count} bottles of beer.
-Take one down and pass it around, #{bottles_count - 1} bottle of beer on the wall.
-"
+      old_bottle_stash = "#{bottles_count} bottles"
+      new_bottle_stash = "#{bottles_count - 1} bottles"
     end
+
+    "#{old_bottle_stash} of beer on the wall, #{old_bottle_stash} of beer.
+Take #{taking_down} down and pass it around, #{new_bottle_stash} of beer on the wall.
+"
   end
 end
