@@ -26,6 +26,8 @@ class Bottles
   end
 
   def verses(*args)
-    args.map { |bottles_count| Bottles.new.verse(bottles_count) } * "\n"
+    sorted_begin_smallest = args.sort
+    list_of_all_bottles_count = (sorted_begin_smallest[0]..sorted_begin_smallest[1]).to_a
+    list_of_all_bottles_count.reverse.map { |bottles_count| Bottles.new.verse(bottles_count) } * "\n"
   end
 end
