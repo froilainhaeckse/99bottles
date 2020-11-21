@@ -1,37 +1,30 @@
 # frozen_string_literal: true
 
 class Bottles
-  def verse(bottles_count)
-    action = 'Take one down and pass it around'
-    if bottles_count == 1
-      old_bottle_stash = "#{bottles_count} bottle"
-      new_bottle_stash = 'no more bottles'
-      action = 'Take it down and pass it around'
-    elsif bottles_count == 2
-      old_bottle_stash = "#{bottles_count} bottles"
-      new_bottle_stash = "#{bottles_count - 1} bottle"
-    elsif bottles_count == 0
-      old_bottle_stash = 'no more bottles'
-      bottles_count = 99
-      new_bottle_stash = "#{bottles_count} bottles"
-      action = 'Go to the store and buy some more'
-    else
-      old_bottle_stash = "#{bottles_count} bottles"
-      new_bottle_stash = "#{bottles_count - 1} bottles"
-    end
-
-    "#{old_bottle_stash.capitalize} of beer on the wall, #{old_bottle_stash} of beer.
-#{action}, #{new_bottle_stash} of beer on the wall.
-"
-  end
-
-  def verses(*args)
-    sorted_begin_smallest = args.sort
-    list_of_all_bottles_count = (sorted_begin_smallest[0]..sorted_begin_smallest[1]).to_a
-    list_of_all_bottles_count.reverse.map { |bottles_count| Bottles.new.verse(bottles_count) } * "\n"
-  end
-
   def song
-    Bottles.new.verses(99, 0)
+    verses(99, 0)
   end
+
+  def verses(starting, ending)
+    starting.downto(ending).collect{ |i|verse(i) unless i < ending }.join("\n")
+  end
+
+  def verse(number)
+    "#{amount_of_bottles(number).capitalize} of beer on the wall, " +
+      "#{amount_of_bottles(number)} of beer.\n" +
+      action(number) +
+      "#{number.zero? ? amount_of_bottles(99) : amount_of_bottles(number - 1)} of beer on the wall.\n"
+  end
+end
+
+def amount_of_bottles(number)
+  return "#{number} bottle" if number == 1
+
+  "#{number <= 0 ? 'no more' : number} bottles"
+end
+
+def action(number)
+  return 'Go to the store and buy some more, ' if number.zero?
+
+  "Take #{number == 1 ? 'it' : 'one'} down and pass it around, "
 end
